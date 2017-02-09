@@ -1,20 +1,32 @@
-import { api } from 'web-service'
+'use strict';
 
-import example_api from './api/example'
+var express = require('express');
+var epilogue = require('epilogue');
+var database = require('./models/index').sequelize;
+var Sequelize = require('sequelize');
+var User = require('./models/user')(database, Sequelize);
 
 const API_SERVICE_PORT = 3003
 
-const apiService = api
-({
-	name : 'Example API service',
-	api  : [example_api]
-})
+var app = express();
 
-apiService.listen(API_SERVICE_PORT).then(() =>
-{
-	console.info(`Api server is listening at http://localhost:${API_SERVICE_PORT}`)
-},
-(error) =>
-{
-	console.error(error)
-})
+// Initialize epilogue
+epilogue.initialize({
+  app: app,
+  sequelize: database
+});
+
+// User REST resource
+epilogue.resource({
+  model: User,
+  endpoints: ['/users', '/users/:id']
+});
+
+app.listen(API_SERVICE_PORT, (error) => {
+  if (error) {
+    console.error(error.stack || error);
+    throw error;
+  }
+
+  console.log(`Api server is listening at http://localhost:${API_SERVICE_PORT}`);
+});

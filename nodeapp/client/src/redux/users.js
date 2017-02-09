@@ -10,8 +10,8 @@ export const get_users = action
 	action: async (http) =>
 	{
 		await delay(1000)
-		const user_ids = await http.get('/api/example/users')
-		return await Promise.all(user_ids.map(id => http.get(`/api/example/users/${id}`)))
+		const user_ids = await http.get('/api/users')
+		return await Promise.all(user_ids.map(id => http.get(`/api/users/${id}`)))
 	},
 	result: (state, result) =>
 	({
@@ -30,7 +30,7 @@ export const add_user = action
 	action: async (user, http) =>
 	{
 		await delay(1500)
-		await http.post(`/api/example/users`, user)
+		await http.post(`/api/users`, user)
 	}
 },
 handler)
@@ -42,7 +42,7 @@ export const delete_user = action
 	action: async (id, http) =>
 	{
 		await delay(1000)
-		await http.delete(`/api/example/users/${id}`)
+		await http.delete(`/api/users/${id}`)
 	}
 },
 handler)
