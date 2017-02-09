@@ -1,0 +1,100 @@
+@import "constants.scss";
+@import "isomorphic.scss";
+
+@import "../../src/components/Menu.scss";
+@import "../../src/components/Preloading.scss";
+
+@import "../../src/pages/Error.scss";
+@import "../../src/pages/Home.scss";
+@import "../../src/pages/Layout.scss";
+@import "../../src/pages/NotFound.scss";
+@import "../../src/pages/Users.scss";
+
+body
+{
+	margin     : 0;
+	overflow-y : scroll;
+}
+
+body, button, input, textarea, select
+{
+	font-family : Arial, Helvetica, Sans;
+	font-size   : var(--font-size);
+}
+
+button
+{
+	background : none;
+	border     : none;
+	outline    : none;
+	padding    : 0;
+
+	font-weight : bold;
+	color       : var(--base-color);
+
+	transition: all 30ms ease-out;
+
+	&:active
+	{
+		color: var(--base-color-ligher);
+	}
+}
+
+nav
+{
+	padding-top    : calc(var(--unit) * 1);
+	padding-bottom : calc(var(--unit) * 1);
+}
+
+a
+{
+	color: inherit;
+}
+
+a:active
+{
+	color: var(--base-color-darker);
+}
+
+body
+{
+	margin-top    : calc(var(--unit) * 1);
+	margin-bottom : calc(var(--unit) * 2);
+}
+
+section
+{
+	padding-left  : calc(var(--unit) * 14);
+	padding-right : calc(var(--unit) * 14);
+}
+
+header
+{
+	padding-top    : calc(var(--unit) * 10);
+	padding-bottom : calc(var(--unit) * 10);
+	padding-left   : calc(var(--unit) * 8);
+	padding-right  : calc(var(--unit) * 8);
+}
+
+.rrui__button--border .rrui__button__button
+{
+	padding-top    : 0.5em !important;
+	padding-bottom : 0.3em !important;
+	font-weight    : normal;
+	font-size      : inherit;
+}
+
+.rrui__text-input__field
+{
+	padding-top    : 0.3em;
+	padding-bottom : 0.3em;
+	border-top-width   : 0;
+	border-left-width  : 0;
+	border-right-width : 0;
+	outline            : none;
+}
+
+.rrui__text-input label
+{
+	top: 0.4rem !important;
+}
