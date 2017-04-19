@@ -2,7 +2,6 @@
 // (including generators, which means async/await)
 import 'babel-polyfill'
 import { render } from 'react-isomorphic-render'
-
 import settings from './react-isomorphic-render'
 
 require('../assets/styles/style.scss')

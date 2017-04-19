@@ -1,6 +1,9 @@
 import path from 'path'
 import webservice from 'web-service'
 
+import Log from 'log'
+const log = new Log('info')
+
 const WEB_SERVICE_PORT = 3000
 const PAGE_SERVICE_PORT = 3002
 const API_SERVICE_PORT = 3003

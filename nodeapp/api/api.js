@@ -1,10 +1,14 @@
 'use strict';
 
-var express = require('express');
-var epilogue = require('epilogue');
-var database = require('./models/index').sequelize;
-var Sequelize = require('sequelize');
+import express from 'express'
+import epilogue from 'epilogue'
+import { sequelize as database } from './models/index'
+import Sequelize from 'sequelize'
+import Log from 'log'
+
 var User = require('./models/user')(database, Sequelize);
+
+const log = new Log('info')
 
 const API_SERVICE_PORT = 3003
 
@@ -24,9 +28,9 @@ epilogue.resource({
 
 app.listen(API_SERVICE_PORT, (error) => {
   if (error) {
-    console.error(error.stack || error);
+    log.error(error.stack || error);
     throw error;
   }
 
-  console.log(`Api server is listening at http://localhost:${API_SERVICE_PORT}`);
+  log.info(`Api server is listening at http://localhost:${API_SERVICE_PORT}`);
 });

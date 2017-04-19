@@ -14,7 +14,7 @@ configuration.plugins.push(
       NODE_ENV: JSON.stringify('development'),
       BABEL_ENV: JSON.stringify('development/client')
     },
-    REDUX_DEVTOOLS : true  // enable/disable redux-devtools
+    REDUX_DEVTOOLS : false  // enable/disable redux-devtools
   }),
 
   // faster code reload on changes

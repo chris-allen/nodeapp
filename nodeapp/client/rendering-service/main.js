@@ -5,6 +5,9 @@ import path from 'path'
 
 import settings, { icon } from '../src/react-isomorphic-render'
 
+import Log from 'log'
+const log = new Log('info')
+
 const WEB_SERVICE_PORT = 3000
 const PAGE_SERVICE_PORT = 3002
 
@@ -77,10 +80,10 @@ export default function(parameters) {
   // Start webpage rendering server
   server.listen(PAGE_SERVICE_PORT, function(error) {
     if (error) {
-      console.error('Webpage rendering server shutdown due to an error')
+      log.error('Webpage rendering server shutdown due to an error')
       throw error
     }
 
-    console.log(`Webpage server is listening at http://localhost:${PAGE_SERVICE_PORT}`)
+    log.info(`Webpage server is listening at http://localhost:${PAGE_SERVICE_PORT}`)
   })
 }

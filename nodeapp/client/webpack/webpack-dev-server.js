@@ -16,6 +16,8 @@ const developmentServerOptions = {
   // lazy mode: The compiler compiles on every request to the entry point.
   lazy        : false,
 
+  watchOptions: { poll: true },
+
   // network path for static files: fetch all statics from webpack development server
   publicPath  : configuration.output.publicPath,
 
