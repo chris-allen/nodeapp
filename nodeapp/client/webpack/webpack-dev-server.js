@@ -16,6 +16,7 @@ const developmentServerOptions = {
   // lazy mode: The compiler compiles on every request to the entry point.
   lazy        : false,
 
+  // This resolves an issue where files edited from a host OS don't trigger vagrant's webpack watch
   watchOptions: { poll: true },
 
   // network path for static files: fetch all statics from webpack development server
