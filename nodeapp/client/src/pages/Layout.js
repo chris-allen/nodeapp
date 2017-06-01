@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { head } from 'react-isomorphic-render'
+import React, { Component } from 'react'
+import { Title, Meta } from 'react-isomorphic-render'
+import { PropTypes } from 'prop-types'
 
 import Menu       from '../components/Menu'
 import Preloading from '../components/Preloading'
@@ -17,7 +18,6 @@ export default class Layout extends Component
 
 		// Html document metadata
 
-		const title = 'WebApp'
 		const description = 'A generic web application boilerplate'
 
 		const meta =
@@ -46,7 +46,8 @@ export default class Layout extends Component
 		const markup = 
 		(
 			<div className="content">
-				{ head(title, meta) }
+				<Meta>{ meta }</Meta>
+				<Title>WebApp</Title>
 
 				<Preloading/>
 

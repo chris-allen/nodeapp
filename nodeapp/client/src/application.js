@@ -5,7 +5,7 @@ import { render } from 'react-isomorphic-render'
 import settings from './react-isomorphic-render'
 
 require('../assets/styles/style.scss')
-require('react-responsive-ui/styles/react-responsive-ui.css')
+require('react-responsive-ui/style.css')
 
 // renders the webpage on the client side
 render(settings,

@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators as bind_action_creators } from 'redux'
 import { Modal, TextInput, Button } from 'react-responsive-ui'
 import Form, { Field, Submit } from 'simpler-redux-form'
-import { title, preload } from 'react-isomorphic-render'
+import { Title, preload } from 'react-isomorphic-render'
 import { flat as style } from 'react-styling'
 
 import { connector, get_users, add_user, delete_user } from '../redux/users'
@@ -86,10 +86,11 @@ export default class Users_page extends Component
 
 		return (
 			<section>
-				{ title("Simple REST API example") }
+				<Title>Simple REST API example</Title>
 
 				<div>
 					<p>This is an example of isomorphic REST API data querying (try disabling javascript and reloading the page)</p>
+					<p>Test</p>
 
 					<div style={ styles.users }>
 

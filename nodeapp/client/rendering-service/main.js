@@ -31,25 +31,19 @@ export default function(parameters) {
     //
     // Also a website "favicon".
     //
-    assets(path) {
-      // Retrieve asset chunk file names
-      // (which are output by client side Webpack build)
-      const result = { ...parameters.chunks() }
+    assets: (path, { store }) =>
+    {
+      return {
+        // Retrieve asset chunk file names
+        // (which are output by client side Webpack build)
+        ...parameters.chunks(),
 
-      // Webpack entry point (can be used for code splitting)
-      result.entry = 'main'
+        // Webpack entry point (can be used for code splitting)
+        entries: ['main'],
 
-      // // Clear Webpack require() cache for hot reload in development mode
-      // // (this is not necessary)
-      // if (process.env.NODE_ENV !== 'production') {
-      //   delete require.cache[require.resolve('../assets/images/icon.png')]
-      // }
-
-      // Add "favicon"
-      result.icon = icon
-
-      // Return assets
-      return result
+        // Add "favicon"
+        icon: icon
+      }
     },
 
     html: {
