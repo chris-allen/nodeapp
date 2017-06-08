@@ -2,7 +2,6 @@
 
 import { sequelize as database } from './models/index'
 import Sequelize from 'sequelize'
-
 const User = require('./models/user')(database, Sequelize);
 
 module.exports = function(epilogue) {
