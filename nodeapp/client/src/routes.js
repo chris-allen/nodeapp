@@ -7,22 +7,20 @@ import NotFound     from './pages/NotFound'
 import Users        from './pages/Users'
 import Profile      from './pages/Profile'
 import Home         from './pages/Home'
+import Login        from './pages/Login'
 
-// import { authorize } from 'react-isomorphic-render'
+import RequireAuth from './components/auth/require_auth'
 
-// // Gets `user` from Redux state
-// const getUser = state => state.authentication.user
+export default (
+  <Route path="/" component={ Layout }>
+    <IndexRoute component={ Home }/>
 
-// // Restricts a `<Route/>` to a certain part of users
-// const restricted = (route, authorization) => authorize(getUser, authorization, route)
+    <Route path="login" component={ Login }/>
 
-export default
-(
-	<Route path="/" component={ Layout }>
-		<IndexRoute component={ Home }/>
-        <Route path="profile" component={ Profile }/>
-		<Route path="users" component={ Users }/>
-		<Route path="error" component={ GenericError }/>
-		<Route path="*" component={ NotFound } status={ 404 }/>
-	</Route>
+    <Route path="profile" component={ RequireAuth(Profile) }/>
+    <Route path="users" component={ RequireAuth(Users) }/>
+
+    <Route path="error" component={ GenericError }/>
+    <Route path="*" component={ NotFound } status={ 404 }/>
+  </Route>
 )

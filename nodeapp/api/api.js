@@ -3,16 +3,19 @@
 import express from 'express'
 import epilogue from 'epilogue'
 import { sequelize as database } from './models/index'
-import Sequelize from 'sequelize'
+import bodyParser from 'body-parser';
+
 import Log from 'log'
-
-var User = require('./models/user')(database, Sequelize);
-
 const log = new Log('info')
 
 const API_SERVICE_PORT = 3003
 
 var app = express();
+
+app.use(bodyParser.json({ type: '*/*' }));
+
+// User login / signup
+require('./auth/index.js')(app)
 
 // Initialize epilogue
 epilogue.initialize({
@@ -20,11 +23,7 @@ epilogue.initialize({
   sequelize: database
 });
 
-// User REST resource
-epilogue.resource({
-  model: User,
-  endpoints: ['/users', '/users/:id']
-});
+require('./user.js')(epilogue)
 
 app.listen(API_SERVICE_PORT, (error) => {
   if (error) {
