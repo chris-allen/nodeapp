@@ -10,8 +10,8 @@ export const get_users = action
 	action: async (http) =>
 	{
 		await delay(1000)
-		const user_ids = await http.get('/api/users')
-		return await Promise.all(user_ids.map(id => http.get(`/api/users/${id}`)))
+		return http.get('/api/users')
+		// return await Promise.all(user_ids.map(id => http.get(`/api/users/${id}`)))
 	},
 	result: (state, result) =>
 	({

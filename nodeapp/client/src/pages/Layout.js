@@ -43,6 +43,12 @@ export default class Layout extends Component
 			link: '/users'
 		}]
 
+		const header = this.props.profile ? (
+			<header>
+				<Menu items={ menu_items }/>
+			</header>
+		) : null;
+
 		const markup = 
 		(
 			<div className="content">
@@ -51,9 +57,7 @@ export default class Layout extends Component
 
 				<Preloading/>
 
-				<header>
-					<Menu items={ menu_items }/>
-				</header>
+				{ header }
 
 				{ children }
 

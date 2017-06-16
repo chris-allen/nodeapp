@@ -9,13 +9,13 @@ export default function(ComposedComponent) {
     }
 
     componentWillMount() {
-      if (!this.props.authenticated) {
+      if (!this.props.token) {
         this.context.router.push('/login');
       }
     }
 
     componentWillUpdate(nextProps) {
-      if (!nextProps.authenticated) {
+      if (!nextProps.token) {
         this.context.router.push('/');
       }
     }
@@ -26,7 +26,7 @@ export default function(ComposedComponent) {
   }
 
   function mapStateToProps(state) {
-    return { authenticated: state.authenticated };
+    return { token: state.token };
   }
 
   return connect(mapStateToProps)(Authentication);

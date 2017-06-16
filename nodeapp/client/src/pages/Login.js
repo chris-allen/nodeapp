@@ -1,19 +1,29 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { flat as style } from 'react-styling'
 import { TextInput, Button } from 'react-responsive-ui'
 import Form, { Field, Submit } from 'simpler-redux-form'
 import { Title } from 'react-isomorphic-render'
 
-import husky from '../../assets/images/husky.jpg'
+import { connector, gogo_user } from '../redux/auth'
 
-export default class Page extends Component
+@connect(state => ({token: state.token}), { gogo_user })
+export default class Login_page extends Component
 {
-    login() {
-        console.log("ALL DONE");
-        setTimeout(function() {
-            dispatch({ type: 'AUTH_USER' });
-        }, 2000);
+    state = {}
+
+    constructor()
+    {
+        super()
+
+        this.user_logged_in = this.user_logged_in.bind(this)
     }
+
+    user_logged_in()
+    {
+        console.log("LOGGED IN");
+    }
+
     render()
     {
         const markup = 
@@ -26,7 +36,7 @@ export default class Page extends Component
                 </h1>
 
                 
-                <LoginForm onSubmitted={ this.login }/>
+                <LoginForm onSubmitted={ this.user_logged_in }/>
             </section>
         )
 
@@ -36,6 +46,10 @@ export default class Page extends Component
 
 
 @Form
+@connect(state => { 
+    console.log(state)
+    return ({token: state.token})
+}, { gogo_user })
 class LoginForm extends Component
 {
     constructor()
@@ -47,9 +61,10 @@ class LoginForm extends Component
 
     async submit(values)
     {
-        const { add_user, onSubmitted } = this.props
+        const { gogo_user, onSubmitted } = this.props
 
-        await add_user(values)
+        console.log(values);
+        await gogo_user(values)
         onSubmitted()
     }
 
@@ -57,19 +72,25 @@ class LoginForm extends Component
     {
         if (!value)
         {
-            return "Enter a valie email address"
+            return "Enter a valid email address"
         }
     }
 
     render()
     {
-        const { submit, submitting } = this.props
+        const { token, submit, submitting } = this.props
 
         return (
-            <form onSubmit={ submit(this.submit) }>
+            <form onSubmit={ submit(this.submit) } style={ styles.login_form }>
+                <h2> { token } </h2>
                 <Field
                     name="email"
-                    label="Email"
+                    validate={ this.validate_email }
+                    component={ TextInput }
+                    style={ styles.login_form_input }/>
+                <Field
+                    name="password"
+                    type="password"
                     validate={ this.validate_email }
                     component={ TextInput }
                     style={ styles.login_form_input }/>
@@ -103,10 +124,14 @@ const styles = style
 
         border-radius : 0.5em
 
+    login_form
+        width: 300px;
+        margin: 0 auto;
+
     login_form_input, login_form_submit
         display        : inline-block
         vertical-align : top
-        font-size      : 85%
+        font-size      : 0.8em
         
     login_form_input
         margin-right   : 0.6em

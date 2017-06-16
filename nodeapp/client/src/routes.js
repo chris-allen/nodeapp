@@ -5,7 +5,6 @@ import Layout       from './pages/Layout'
 import GenericError from './pages/Error'
 import NotFound     from './pages/NotFound'
 import Users        from './pages/Users'
-import Profile      from './pages/Profile'
 import Home         from './pages/Home'
 import Login        from './pages/Login'
 
@@ -17,8 +16,7 @@ export default (
 
     <Route path="login" component={ Login }/>
 
-    <Route path="profile" component={ RequireAuth(Profile) }/>
-    <Route path="users" component={ RequireAuth(Users) }/>
+    <Route path="users" component={ Users }/>
 
     <Route path="error" component={ GenericError }/>
     <Route path="*" component={ NotFound } status={ 404 }/>

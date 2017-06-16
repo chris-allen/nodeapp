@@ -10,8 +10,9 @@ const User = require('../models/user')(database, Sequelize);
 
 module.exports = function(app) {
     // Setup passport strategies
-    require('./strategies');
+    require('./passport_strategies');
 
+    // Passport middleware
     app.use(passport.initialize());
 
     function tokenForUser(user) {
@@ -20,7 +21,7 @@ module.exports = function(app) {
     }
 
     app.post('/login', passport.authenticate('local', { session: false }), function(req, res, next) {
-        res.send({ token: tokenForUser(req.user)});
+        res.send({ token: tokenForUser(req.user), user: req.user});
     });
 
     app.post('/signup', function(req, res, next) {
@@ -41,8 +42,6 @@ module.exports = function(app) {
                     res.send({ token: tokenForUser(user)});
                 })
                 .catch(error => {
-                    console.log(typeof error);
-                    
                     if (error.hasOwnProperty('errors')) {
                         res.status(400).send(error.errors);
                     }

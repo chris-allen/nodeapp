@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators as bind_action_creators } from 'redux'
 import { Modal, TextInput, Button } from 'react-responsive-ui'
 import Form, { Field, Submit } from 'simpler-redux-form'
 import { Title, preload } from 'react-isomorphic-render'
@@ -8,15 +7,11 @@ import { flat as style } from 'react-styling'
 
 import { connector, get_users, add_user, delete_user } from '../redux/users'
 
-@preload(({ dispatch, getState }) => dispatch(get_users()))
-@connect
-(
-	state => 
-	({
-		...connector(state.users)
-	}),
-	{ get_users, add_user, delete_user }
-)
+// @preload(({ dispatch, getState }) => dispatch(get_users()))
+@connect(state => {
+	console.log(state)
+	return({ ...connector(state.users) })
+}, { get_users, add_user, delete_user })
 export default class Users_page extends Component
 {
 	state = {}
@@ -75,6 +70,8 @@ export default class Users_page extends Component
 			deleteUserPending
 		}
 		= this.props
+
+		console.log('getUsersPending: '+getUsersPending)
 
 		const
 		{
@@ -164,7 +161,7 @@ export default class Users_page extends Component
 						return (
 							<tr key={ user.id }>
 								<td style={ styles.id }>{ user.id }</td>
-								<td style={ styles.name }>{ user.name }</td>
+								<td style={ styles.name }>{ user.first_name+' '+user.last_name }</td>
 								<td>
 									<Button
 										busy={ userBeingDeleted === user.id }
