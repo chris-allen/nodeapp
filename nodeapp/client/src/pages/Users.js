@@ -7,17 +7,16 @@ import { flat as style } from 'react-styling'
 
 import { connector, get_users, add_user, delete_user } from '../redux/users'
 
-// @preload(({ dispatch, getState }) => dispatch(get_users()))
-@connect(state => {
-	console.log(state)
-	return({ ...connector(state.users) })
-}, { get_users, add_user, delete_user })
+@preload(({ dispatch, getState }) => { return dispatch(get_users()) })
+@connect(state =>
+	({ ...connector(state.users) }),
+	{ get_users, add_user, delete_user }
+)
 export default class Users_page extends Component
 {
 	state = {}
 
-	constructor()
-	{
+	constructor() {
 		super()
 
 		this.refresh            = this.refresh.bind(this)
@@ -27,25 +26,24 @@ export default class Users_page extends Component
 		this.user_added         = this.user_added.bind(this)
 	}
 
-	refresh()
-	{
+	componentWillMount() {
+	}
+
+	refresh() {
 		const { get_users } = this.props
 
 		return get_users()
 	}
 
-	show_add_user_form()
-	{
+	show_add_user_form() {
 		this.setState({ show_add_user_form: true })
 	}
 
-	hide_add_user_form()
-	{
+	hide_add_user_form() {
 		this.setState({ show_add_user_form: false })
 	}
 
-	async delete_user(id)
-	{
+	async delete_user(id) {
 		const { delete_user } = this.props
 		
 		this.setState({ userBeingDeleted: id })
@@ -54,14 +52,12 @@ export default class Users_page extends Component
 		this.refresh()
 	}
 
-	user_added()
-	{
+	user_added() {
 		this.hide_add_user_form()
 		this.refresh()
 	}
 
-	render()
-	{
+	render() {
 		const
 		{
 			users,
@@ -70,8 +66,6 @@ export default class Users_page extends Component
 			deleteUserPending
 		}
 		= this.props
-
-		console.log('getUsersPending: '+getUsersPending)
 
 		const
 		{
@@ -87,7 +81,6 @@ export default class Users_page extends Component
 
 				<div>
 					<p>This is an example of isomorphic REST API data querying (try disabling javascript and reloading the page)</p>
-					<p>Test</p>
 
 					<div style={ styles.users }>
 
@@ -121,8 +114,7 @@ export default class Users_page extends Component
 		)
 	}
 
-	render_users()
-	{
+	render_users() {
 		const
 		{
 			users,
@@ -137,18 +129,15 @@ export default class Users_page extends Component
 
 		const { userBeingDeleted } = this.state
 
-		if (getUsersPending)
-		{
+		if (getUsersPending) {
 			return 'Loading users...'
 		}
 
-		if (getUsersError)
-		{
+		if (getUsersError) {
 			return 'Failed to load the list of users'
 		}
 
-		if (users.length === 0)
-		{
+		if (users.length === 0) {
 			return 'No users'
 		}
 
@@ -183,31 +172,26 @@ export default class Users_page extends Component
 @connect(state => ({}), { add_user })
 class Add_user_form extends Component
 {
-	constructor()
-	{
+	constructor() {
 		super()
 
 		this.submit = this.submit.bind(this)
 	}
 
-	async submit(values)
-	{
+	async submit(values) {
 		const { add_user, onSubmitted } = this.props
 
 		await add_user(values)
 		onSubmitted()
 	}
 
-	validate_name(value)
-	{
-		if (!value)
-		{
+	validate_name(value) {
+		if (!value) {
 			return "Enter a name"
 		}
 	}
 
-	render()
-	{
+	render() {
 		const { submit, submitting } = this.props
 
 		return (

@@ -9,19 +9,18 @@ export { default as icon } from '../assets/images/icon.png'
 
 export default
 {
-	reducer,
-	routes,
-	wrapper,
+	reducer: reducer,
+	routes: routes,
+	wrapper: wrapper,
 
 	error: (error, { path, url, redirect, dispatch, getState, server }) => {
 		console.error(`Error while preloading "${url}"`)
 		console.error(error)
 		
 		// // Not authenticated
-		// if (error.status === 401)
-		// {
-		// 	return redirect('/unauthenticated')
-		// }
+		if (error.status === 401) {
+			return redirect('/login')
+		}
 
 		// // Not authorized
 		// if (error.status === 403)
@@ -38,6 +37,32 @@ export default
 		// throw error
 	},
 
+	http: {
+	    request: (request, { store }) => {
+	    	const bearerToken = request.get('Authorization')
+	    	if (bearerToken) {
+	    		request.set('Authorization', bearerToken.substring(7))
+	    	}
+	    }
+	},
+
+	authentication: {
+		protectedCookie: 'token',
+		accessToken: (getCookie, helpers) => {
+			const token = getCookie('token')
+			console.log('token: '+token)
+			if (token) {
+				return token
+			}
+			else {
+				const state = helpers.store.getState()
+				if (state.auth.token) {
+					return state.auth.token
+				}
+				return ""
+			}
+		}
+	},
 
 	...asyncSettings
 }

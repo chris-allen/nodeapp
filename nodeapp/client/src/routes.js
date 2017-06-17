@@ -16,7 +16,7 @@ export default (
 
     <Route path="login" component={ Login }/>
 
-    <Route path="users" component={ Users }/>
+    <Route path="users" component={ RequireAuth(Users) }/>
 
     <Route path="error" component={ GenericError }/>
     <Route path="*" component={ NotFound } status={ 404 }/>

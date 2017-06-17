@@ -5,12 +5,12 @@ import { TextInput, Button } from 'react-responsive-ui'
 import Form, { Field, Submit } from 'simpler-redux-form'
 import { Title } from 'react-isomorphic-render'
 
-import { connector, gogo_user } from '../redux/auth'
+import { connector, login_user } from '../redux/auth'
 
-@connect(state => ({token: state.token}), { gogo_user })
+@connect(state => ({ ...connector(state.auth) }), { login_user })
 export default class Login_page extends Component
 {
-    state = {}
+    // state = {}
 
     constructor()
     {
@@ -21,11 +21,13 @@ export default class Login_page extends Component
 
     user_logged_in()
     {
-        console.log("LOGGED IN");
+        this.props.router.push('/users');
     }
 
     render()
     {
+        const { token, loginUserError } = this.props
+
         const markup = 
         (
             <section className="content">
@@ -34,7 +36,6 @@ export default class Login_page extends Component
                 <h1 style={ styles.header }>
                     Login
                 </h1>
-
                 
                 <LoginForm onSubmitted={ this.user_logged_in }/>
             </section>
@@ -46,10 +47,7 @@ export default class Login_page extends Component
 
 
 @Form
-@connect(state => { 
-    console.log(state)
-    return ({token: state.token})
-}, { gogo_user })
+@connect(state => ({}), { login_user })
 class LoginForm extends Component
 {
     constructor()
@@ -61,10 +59,9 @@ class LoginForm extends Component
 
     async submit(values)
     {
-        const { gogo_user, onSubmitted } = this.props
+        const { login_user, onSubmitted } = this.props
 
-        console.log(values);
-        await gogo_user(values)
+        await login_user(values)
         onSubmitted()
     }
 
@@ -78,11 +75,10 @@ class LoginForm extends Component
 
     render()
     {
-        const { token, submit, submitting } = this.props
+        const { submit, submitting } = this.props
 
         return (
             <form onSubmit={ submit(this.submit) } style={ styles.login_form }>
-                <h2> { token } </h2>
                 <Field
                     name="email"
                     validate={ this.validate_email }

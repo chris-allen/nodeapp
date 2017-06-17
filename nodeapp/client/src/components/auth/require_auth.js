@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types'
+// import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux';
+import { preload } from 'react-isomorphic-render'
+
+import { connector, get_me } from '../../redux/auth'
 
 export default function(ComposedComponent) {
+  @preload(({ dispatch, getState }) => { return dispatch(get_me()) })
+  @connect(state => ({ ...connector(state.auth) }), { get_me })
   class Authentication extends Component {
-    static contextTypes = {
-      router: PropTypes.object
-    }
-
     componentWillMount() {
-      if (!this.props.token) {
-        this.context.router.push('/login');
+      if (!this.props.user) {
+        this.props.router.push('/login');
       }
     }
 
     componentWillUpdate(nextProps) {
-      if (!nextProps.token) {
-        this.context.router.push('/');
+      if (!nextProps.user) {
+        this.props.router.push('/');
       }
     }
 
@@ -24,10 +25,5 @@ export default function(ComposedComponent) {
       return <ComposedComponent {...this.props} />
     }
   }
-
-  function mapStateToProps(state) {
-    return { token: state.token };
-  }
-
-  return connect(mapStateToProps)(Authentication);
+  return Authentication
 }

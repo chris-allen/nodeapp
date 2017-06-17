@@ -95,6 +95,7 @@
     "sequelize": "^3.30.0",
     "simpler-redux-form": "^0.3.9",
     "style-loader": "^0.13.1",
+    "universal-cookie": "^2.0.8",
     "universal-webpack": "^0.3.0",
     "url-loader": "^0.5.7",
     "web-service": "^0.4.6",

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import { flat as style } from 'react-styling'
 import { Title } from 'react-isomorphic-render'
 
@@ -8,11 +9,15 @@ export default class Page extends Component
 {
 	render()
 	{
+		const { user } = this.props
+		console.log(user)
+
 		const markup = 
 		(
 			<section className="content">
 				<Title>Home</Title>
 
+				<Link to='/login'>Login</Link>
 				<h1 style={ styles.header }>
 					Husky
 				</h1>
