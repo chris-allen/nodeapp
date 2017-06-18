@@ -50,7 +50,6 @@ export default
 		protectedCookie: 'token',
 		accessToken: (getCookie, helpers) => {
 			const token = getCookie('token')
-			console.log('token: '+token)
 			if (token) {
 				return token
 			}

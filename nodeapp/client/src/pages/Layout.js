@@ -5,6 +5,12 @@ import { PropTypes } from 'prop-types'
 import Menu       from '../components/Menu'
 import Preloading from '../components/Preloading'
 
+import { connect } from 'react-redux';
+import { preload } from 'react-isomorphic-render'
+import { connector, get_me } from '../redux/auth'
+
+@preload(({ dispatch, getState }) => { return dispatch(get_me()) })
+@connect(state => ({ ...connector(state.auth) }), { get_me })
 export default class Layout extends Component
 {
 	static propTypes =

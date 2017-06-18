@@ -51,16 +51,16 @@ export const get_me = action
     namespace: 'AUTH',
     event: 'GET_ME',
     action: async (http) => {
-        return http.get('/api/me')
+        // If we're not logged in, don't throw a 401, just no-op
+        if (http.cookies_raw && http.cookies_raw.indexOf('token=') >= 0)
+            return http.get('/api/me')
+        else
+            await delay(0)
     },
-    result: (state, result) => {
-        console.log("MEMEME")
-        console.log(result)
-        return ({
-            ...state,
-            user: result
-        })
-    }
+    result: (state, result) => ({
+        ...state,
+        user: result
+    })
 },
 handler)
 
@@ -77,7 +77,6 @@ const initial_state = { token: null, user: null }
 export default handler.reducer(initial_state)
 
 // "Sleep" using `Promise`
-// function delay(delay)
-// {
-//     return new Promise(resolve => setTimeout(resolve, delay))
-// }
+function delay(delay) {
+    return new Promise(resolve => setTimeout(resolve, delay))
+}

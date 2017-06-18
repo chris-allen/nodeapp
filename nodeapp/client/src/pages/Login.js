@@ -3,29 +3,27 @@ import { connect } from 'react-redux'
 import { flat as style } from 'react-styling'
 import { TextInput, Button } from 'react-responsive-ui'
 import Form, { Field, Submit } from 'simpler-redux-form'
-import { Title } from 'react-isomorphic-render'
+import { redirect, Title } from 'react-isomorphic-render'
 
 import { connector, login_user } from '../redux/auth'
 
-@connect(state => ({ ...connector(state.auth) }), { login_user })
+@connect(state => ({ ...connector(state.auth) }), { login_user, redirect })
 export default class Login_page extends Component
 {
     // state = {}
 
-    constructor()
-    {
+    constructor() {
         super()
 
         this.user_logged_in = this.user_logged_in.bind(this)
     }
 
-    user_logged_in()
-    {
-        this.props.router.push('/users');
+    user_logged_in() {
+        const { redirect } = this.props
+        redirect('/users');
     }
 
-    render()
-    {
+    render() {
         const { token, loginUserError } = this.props
 
         const markup = 
@@ -48,33 +46,27 @@ export default class Login_page extends Component
 
 @Form
 @connect(state => ({}), { login_user })
-class LoginForm extends Component
-{
-    constructor()
-    {
+class LoginForm extends Component {
+    constructor() {
         super()
 
         this.submit = this.submit.bind(this)
     }
 
-    async submit(values)
-    {
+    async submit(values) {
         const { login_user, onSubmitted } = this.props
 
         await login_user(values)
         onSubmitted()
     }
 
-    validate_email(value)
-    {
-        if (!value)
-        {
+    validate_email(value) {
+        if (!value) {
             return "Enter a valid email address"
         }
     }
 
-    render()
-    {
+    render() {
         const { submit, submitting } = this.props
 
         return (

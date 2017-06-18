@@ -5,14 +5,18 @@ import Form, { Field, Submit } from 'simpler-redux-form'
 import { Title, preload } from 'react-isomorphic-render'
 import { flat as style } from 'react-styling'
 
-import { connector, get_users, add_user, delete_user } from '../redux/users'
+import { connector as users_connector, get_users, add_user, delete_user } from '../redux/users'
+import { connector as auth_connector } from '../redux/auth'
 
-@preload(({ dispatch, getState }) => { return dispatch(get_users()) })
+
+import RequireAuthComponent from '../components/auth/require_auth'
+
+@preload(({ dispatch, getState }) => dispatch(get_users()))
 @connect(state =>
-	({ ...connector(state.users) }),
+	({ ...users_connector(state.users), ...auth_connector(state.auth) }),
 	{ get_users, add_user, delete_user }
 )
-export default class Users_page extends Component
+export default class Users_page extends RequireAuthComponent
 {
 	state = {}
 
@@ -24,9 +28,6 @@ export default class Users_page extends Component
 		this.hide_add_user_form = this.hide_add_user_form.bind(this)
 		this.delete_user        = this.delete_user.bind(this)
 		this.user_added         = this.user_added.bind(this)
-	}
-
-	componentWillMount() {
 	}
 
 	refresh() {
