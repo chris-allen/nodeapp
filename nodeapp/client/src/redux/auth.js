@@ -18,14 +18,11 @@ export const login_user = action
         cookies.set('token', result.token, { path: '/' });
         return ({
             ...state,
-            token: result.token,
             user: result.user
         })
     }
 },
 handler)
-
-handler.addStateProperties('token', 'user')
 
 export const logout_user = action({
     namespace: 'AUTH',
@@ -39,7 +36,6 @@ export const logout_user = action({
         cookies.set('token', null)
         return ({
             ...state,
-            token: null,
             user: null
         })
     }
@@ -70,7 +66,7 @@ handler.addStateProperties('user')
 export const connector = stateConnector(handler)
 
 
-const initial_state = { token: null, user: null }
+const initial_state = { user: null }
 
 // This is the Redux reducer which now
 // handles the asynchronous actions defined above.
