@@ -26,33 +26,27 @@ module.exports = function(app) {
 
     app.post('/signup', function(req, res, next) {
         User.findOne({ where: { email: 'test' }}).then(user => {
-            if (user) {
-                res.status(400).send({ error: 'Email already in use' });
-            }
-            else {
-                User.create({
-                    email: req.body.email,
-                    first_name: req.body.first_name,
-                    last_name: req.body.last_name,
-                    password: req.body.password,
-                    password_confirmation: req.body.password_confirmation
-                })
-                .then(user => {
-                    console.log('user: '+user);
-                    res.send({ token: tokenForUser(user)});
-                })
-                .catch(error => {
-                    if (error.hasOwnProperty('errors')) {
-                        res.status(400).send(error.errors);
-                    }
-                    else if (error.hasOwnProperty('message')) {
-                        res.status(400).send([ JSON.parse(error.message) ]);
-                    }
-                    else {
-                        res.status(400).send([ { message: 'There was a problem' }]);
-                    }
-                });
-            }
+            User.create({
+                email: req.body.email,
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                password: req.body.password,
+                password_confirmation: req.body.password_confirmation
+            })
+            .then(user => {
+                res.send({ token: tokenForUser(user), user: user});
+            })
+            .catch(error => {
+                if (error.hasOwnProperty('errors')) {
+                    res.status(400).send({ message: JSON.stringify(error.errors)});
+                }
+                else if (error.hasOwnProperty('message')) {
+                    res.status(400).send({ message: error.message });
+                }
+                else {
+                    res.status(400).send({ message: 'There was a problem' });
+                }
+            });
         })
     });
 

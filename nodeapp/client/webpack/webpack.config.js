@@ -34,7 +34,13 @@ var configuration = {
 
   module: {
     rules: [{
-      test: /\.js$/,
+      test: /bootstrap\/js\//,
+      use: [{
+        loader: 'imports?jQuery=jquery'
+      }]
+    },
+    {
+      test: /\.jsx?$/,
       exclude: /node_modules/,
       use: [{
         loader: 'babel-loader'
@@ -55,6 +61,24 @@ var configuration = {
         'style-loader',
         'css-loader?importLoaders=2&sourceMap',
         'postcss-loader'
+      ]
+    },
+    {
+      test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        'url-loader?limit=10000&mimetype=application/font-woff'
+      ]
+    },
+    {
+      test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        'url-loader?limit=10000&mimetype=application/octet-stream'
+        ]
+    },
+    {
+      test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        'file-loader'
       ]
     },
     {

@@ -1,7 +1,7 @@
 @import "constants.scss";
 @import "isomorphic.scss";
 
-@import "../../src/components/Menu.scss";
+@import "../../src/components/TopNav.scss";
 @import "../../src/components/Preloading.scss";
 
 @import "../../src/pages/Error.scss";
@@ -10,16 +10,21 @@
 @import "../../src/pages/NotFound.scss";
 @import "../../src/pages/Users.scss";
 
-body
-{
-	margin     : 0;
-	overflow-y : scroll;
+html, body {
+	margin: 0;
+	padding: 0;
 }
 
 body, button, input, textarea, select
 {
 	font-family : Arial, Helvetica, Sans;
-	font-size   : var(--font-size);
+	font-size   : 18pt;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 button
@@ -30,20 +35,14 @@ button
 	padding    : 0;
 
 	font-weight : bold;
-	color       : var(--base-color);
+	// color       : $base-color;
 
 	transition: all 30ms ease-out;
 
-	&:active
-	{
-		color: var(--base-color-ligher);
-	}
-}
-
-nav
-{
-	padding-top    : calc(var(--unit) * 1);
-	padding-bottom : calc(var(--unit) * 1);
+	// &:active
+	// {
+	// 	color: $base-color-ligher;
+	// }
 }
 
 a
@@ -51,29 +50,18 @@ a
 	color: inherit;
 }
 
-a:active
-{
-	color: var(--base-color-darker);
-}
+// a:active
+// {
+// 	color: $base-color-darker;
+// }
 
-body
-{
-	margin-top    : calc(var(--unit) * 1);
-	margin-bottom : calc(var(--unit) * 2);
-}
-
-section
-{
-	padding-left  : calc(var(--unit) * 14);
-	padding-right : calc(var(--unit) * 14);
-}
-
-header
-{
-	padding-top    : calc(var(--unit) * 10);
-	padding-bottom : calc(var(--unit) * 10);
-	padding-left   : calc(var(--unit) * 8);
-	padding-right  : calc(var(--unit) * 8);
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
 }
 
 .rrui__button--border .rrui__button__button

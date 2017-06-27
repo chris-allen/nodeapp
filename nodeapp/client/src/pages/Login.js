@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { flat as style } from 'react-styling'
-import { TextInput, Button } from 'react-responsive-ui'
-import Form, { Field, Submit } from 'simpler-redux-form'
+// import { TextInput, Button } from 'react-responsive-ui'
+import Form from 'simpler-redux-form'
 import { redirect, Title } from 'react-isomorphic-render'
+import { FormGroup, FormControl, Button } from 'react-bootstrap'
 
 import { connector, login_user } from '../redux/auth'
 
@@ -35,7 +36,7 @@ export default class Login_page extends Component
                     Login
                 </h1>
                 
-                <LoginForm onSubmitted={ this.user_logged_in }/>
+                <LoginForm className="col-md-offset-4 col-md-4" onSubmitted={ this.user_logged_in }/>
             </section>
         )
 
@@ -43,53 +44,59 @@ export default class Login_page extends Component
     }
 }
 
-
 @Form
-@connect(state => ({}), { login_user })
+@connect(state => ({ ...connector(state.auth) }), { login_user })
 class LoginForm extends Component {
+    state = {
+        email: "",
+        password: ""
+    }
+
     constructor() {
         super()
 
         this.submit = this.submit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    async submit(values) {
+    async submit() {
         const { login_user, onSubmitted } = this.props
+        const values = {
+            email: this.state.email,
+            password: this.state.password
+        }
 
         await login_user(values)
         onSubmitted()
     }
 
-    validate_email(value) {
-        if (!value) {
-            return "Enter a valid email address"
-        }
-    }
+    handleChange(e) {
+        // If you are using babel, you can use ES 6 dictionary syntax { [e.target.name] = e.target.value }
+        var change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
+      }
 
     render() {
-        const { submit, submitting } = this.props
+        const { submit, loginUserPending } = this.props
 
         return (
-            <form onSubmit={ submit(this.submit) } style={ styles.login_form }>
-                <Field
+            <form className={ this.props.className }  onSubmit={ submit(this.submit) }>
+                <FormControl
                     name="email"
-                    validate={ this.validate_email }
-                    component={ TextInput }
-                    style={ styles.login_form_input }/>
-                <Field
+                    type="email"
+                    placeholder="Enter email"
+                    onChange={ this.handleChange }
+                    value={this.state.email} />
+                <FormControl
                     name="password"
                     type="password"
-                    validate={ this.validate_email }
-                    component={ TextInput }
-                    style={ styles.login_form_input }/>
-
-                <Submit
-                    submit
-                    component={ Button }
-                    className="rrui__button--border"
-                    style={ styles.login_form_submit }>
+                    placeholder="Enter password"
+                    onChange={ this.handleChange }
+                    value={this.state.password} />
+                <Button type="submit" disabled={ loginUserPending }>
                     Login
-                </Submit>
+                </Button>
             </form>
         )
     }

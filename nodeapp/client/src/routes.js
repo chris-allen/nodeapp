@@ -7,12 +7,14 @@ import NotFound     from './pages/NotFound'
 import Users        from './pages/Users'
 import Home         from './pages/Home'
 import Login        from './pages/Login'
+import Signup        from './pages/Signup'
 
 export default (
   <Route path="/" component={ Layout }>
     <IndexRoute component={ Home }/>
 
     <Route path="login" component={ Login }/>
+    <Route path="signup" component={ Signup }/>
 
     <Route path="users" component={ Users }/>
 

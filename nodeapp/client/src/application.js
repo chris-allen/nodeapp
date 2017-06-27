@@ -4,7 +4,8 @@ import 'babel-polyfill'
 import { render } from 'react-isomorphic-render'
 import settings from './react-isomorphic-render'
 
-require('../assets/styles/style.scss')
+import '../assets/styles/style.scss'
+import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import rrui from 'react-responsive-ui/style.css'
 
 // renders the webpage on the client side

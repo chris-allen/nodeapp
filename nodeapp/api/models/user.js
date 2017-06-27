@@ -62,12 +62,12 @@ module.exports = function(sequelize, Sequelize) {
   var hasSecurePassword = function(user, options, callback) {
     if (user.password != user.password_confirmation) {
       throw new Error(
-        "{"+
+        "[{"+
           "\"message\": \"passwords must match\","+
           "\"type\": \"validation Violation\","+
           "\"path\": \"password_confirmation\","+
           "\"value\": \""+user.password_confirmation+"\""+
-        "}"
+        "}]"
       );
     }
     bcrypt.hash(user.get('password'), 10, function(err, hash) {

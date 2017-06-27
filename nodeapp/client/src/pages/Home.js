@@ -14,8 +14,10 @@ export default class Page extends Component
 	{
 		const { user } = this.props
 
-		const userMarkup = (user ?
-			`Welcome back ${user.first_name}!` : <Link to='/login'>Login</Link>
+		const userMarkup = (!user ? (
+			<div style={ styles.links }>
+				<Link to='/login'>Login</Link> | <Link to='/signup'>Signup</Link>
+			</div>) : null
 		)
 
 		const markup = 
@@ -40,6 +42,9 @@ const styles = style
 `
 	header
 		text-align: center
+
+	links
+		float: right
 
 	image
 		display: block

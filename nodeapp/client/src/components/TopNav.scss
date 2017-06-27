@@ -1,0 +1,26 @@
+.top-nav {
+    top: 0;
+    // height: 50px;
+    background: $dark-grey;
+
+    border-bottom: 1px solid grey;
+
+    ul {
+        list-style: none;
+    }
+
+    .right-nav {
+        float: right;
+
+        #avatar-dropdown {
+            background: transparent;
+            border: none;
+            color: #acacac;
+
+            &:hover {
+                outline: none;
+                color: white;
+            }
+        }
+    }
+}

@@ -4,13 +4,34 @@ import Cookies from 'universal-cookie';
 
 const handler = createHandler(settings);
 
+
+export const signup_user = action
+({
+    namespace: 'AUTH',
+    event: 'SIGNUP_USER',
+    action: async (values, http) =>
+    {
+        // await delay(1000)
+        return http.post(`/api/signup`, values)
+    },
+    result: (state, result) => {
+        const cookies = new Cookies();
+        cookies.set('token', result.token, { path: '/' });
+        return ({
+            ...state,
+            user: result.user
+        })
+    }
+},
+handler)
+
 export const login_user = action
 ({
     namespace: 'AUTH',
     event: 'LOGIN_USER',
     action: async (creds, http) =>
     {
-        // await delay(1000)
+        await delay(1000)
         return http.post(`/api/login`, creds)
     },
     result: (state, result) => {
@@ -33,7 +54,7 @@ export const logout_user = action({
     },
     result: (state, result) => {
         const cookies = new Cookies()
-        cookies.set('token', null)
+        cookies.remove('token')
         return ({
             ...state,
             user: null

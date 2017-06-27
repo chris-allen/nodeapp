@@ -41,6 +41,7 @@ export default
 	    request: (request, { store }) => {
 	    	const bearerToken = request.get('Authorization')
 	    	if (bearerToken) {
+				// Remove "Bearer " prefix for passport
 	    		request.set('Authorization', bearerToken.substring(7))
 	    	}
 	    }
@@ -53,13 +54,7 @@ export default
 			if (token) {
 				return token
 			}
-			else {
-				const state = helpers.store.getState()
-				if (state.auth.token) {
-					return state.auth.token
-				}
-				return ""
-			}
+			return ""
 		}
 	},
 
