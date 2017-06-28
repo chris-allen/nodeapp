@@ -21,7 +21,7 @@ export default class Login_page extends Component
 
     user_logged_in() {
         const { redirect } = this.props
-        redirect('/users');
+        redirect('/app/users');
     }
 
     render() {

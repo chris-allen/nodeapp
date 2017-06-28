@@ -9,14 +9,14 @@ import { connector as users_connector, get_users, add_user, delete_user } from '
 import { connector as auth_connector } from '../redux/auth'
 
 
-import RequireAuthComponent from '../components/auth/require_auth'
+// import RequireAuthComponent from '../components/auth/require_auth'
 
 @preload(({ dispatch, getState }) => dispatch(get_users()))
 @connect(state =>
 	({ ...users_connector(state.users), ...auth_connector(state.auth) }),
 	{ get_users, add_user, delete_user }
 )
-export default class Users_page extends RequireAuthComponent
+export default class Users_page extends Component
 {
 	state = {}
 

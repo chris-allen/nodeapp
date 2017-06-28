@@ -18,6 +18,7 @@ export default class TopNav extends Component {
     }
 
     async log_user_out() {
+        console.log("LOGOUT")
         const { logout_user } = this.props
         await logout_user()
         redirect('/')
@@ -25,19 +26,22 @@ export default class TopNav extends Component {
 
     render() {
         const { user } = this.props
+        const avatarDropdown = user ? (
+            <Dropdown id="avatar-dropdown" pullRight>
+                <Dropdown.Toggle>
+                    <Gravatar email={ user.email } size={40} />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <MenuItem>Account Settings</MenuItem>
+                    <MenuItem onClick={ this.log_user_out }>Logout</MenuItem>
+                </Dropdown.Menu>
+            </Dropdown>
+        ) : null;
         const markup = (
             <nav className="top-nav clearfix" role="navigation">
                 <div className="right-nav">
                     <div className="btn-group">
-                        <Dropdown id="avatar-dropdown" pullRight>
-                            <Dropdown.Toggle>
-                                <Gravatar email={ user.email } size={40} />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <MenuItem>Account Settings</MenuItem>
-                                <MenuItem onClick={ this.log_user_out }>Logout</MenuItem>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        { avatarDropdown }
                     </div>
                 </div>
             </nav>

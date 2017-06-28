@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { flat as style } from 'react-styling'
 import { Link, Title } from 'react-isomorphic-render'
 
+import TopNav from '../components/TopNav'
 import husky from '../../assets/images/husky.jpg'
 
 import { connect } from 'react-redux'
@@ -14,10 +15,10 @@ export default class Page extends Component
 	{
 		const { user } = this.props
 
-		const userMarkup = (!user ? (
+		const topNav = (!user ? (
 			<div style={ styles.links }>
 				<Link to='/login'>Login</Link> | <Link to='/signup'>Signup</Link>
-			</div>) : null
+			</div>) : <TopNav />
 		)
 
 		const markup = 
@@ -25,7 +26,7 @@ export default class Page extends Component
 			<section className="content">
 				<Title>Home</Title>
 
-				{ userMarkup }
+				{ topNav }
 				<h1 style={ styles.header }>
 					Husky
 				</h1>

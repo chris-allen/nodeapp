@@ -7,6 +7,8 @@ import asyncSettings from './react-isomorphic-render-async'
 // since no assets are emitted on the server side
 export { default as icon } from '../assets/images/icon.png'
 
+import Cookies from 'universal-cookie';
+
 export default
 {
 	reducer: reducer,
@@ -15,7 +17,7 @@ export default
 
 	error: (error, { path, url, redirect, dispatch, getState, server }) => {
 		console.error(`Error while preloading "${url}"`)
-		console.error(error)
+		console.log(error)
 		
 		// // Not authenticated
 		if (error.status === 401) {
