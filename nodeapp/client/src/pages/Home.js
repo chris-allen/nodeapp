@@ -1,61 +1,75 @@
 import React, { Component } from 'react'
 import { flat as style } from 'react-styling'
-import { Link, Title } from 'react-isomorphic-render'
+import { Link, Title, preload, redirect } from 'react-isomorphic-render'
 
 import TopNav from '../components/TopNav'
 import husky from '../../assets/images/husky.jpg'
 
 import { connect } from 'react-redux'
-import { connector } from '../redux/auth'
+import { connector, get_me, logout_user } from '../redux/auth'
 
-@connect(state => ({ ...connector(state.auth) }), { })
-export default class Page extends Component
+@preload(({ dispatch, getState }) => { return dispatch(get_me()) })
+@connect(state => ({ ...connector(state.auth) }), { logout_user, redirect })
+export default class Home extends Component
 {
-	render()
-	{
-		const { user } = this.props
+    constructor() {
+        super()
 
-		const topNav = (!user ? (
-			<div style={ styles.links }>
-				<Link to='/login'>Login</Link> | <Link to='/signup'>Signup</Link>
-			</div>) : <TopNav />
-		)
+        this.log_user_out = this.log_user_out.bind(this)
+    }
 
-		const markup = 
-		(
-			<section className="content">
-				<Title>Home</Title>
+    async log_user_out() {
+        const { logout_user, redirect } = this.props
+        await logout_user()
+        redirect('/')
+    }
 
-				{ topNav }
-				<h1 style={ styles.header }>
-					Husky
-				</h1>
+    render() {
+        const { user } = this.props
 
-				<img src={ husky } style={ styles.image }/>
-			</section>
-		)
+        const userLinks = (!user ?
+            (<div><Link to='/login'>Login</Link> | <Link to='/signup'>Signup</Link></div>)
+            : (<Link to='#' onClick={ this.log_user_out }>Logout</Link>)
+        )
 
-		return markup
-	}
+        const markup = (
+            <section className="content">
+                <Title>Home</Title>
+
+                <div style={ styles.links }>
+                    { userLinks }
+                </div>
+
+                <h1 style={ styles.header }>
+                    Husky
+                </h1>
+
+                <img src={ husky } style={ styles.image }/>
+            </section>
+        )
+
+        return markup
+    }
 }
 
 const styles = style
 `
-	header
-		text-align: center
+    header
+        text-align: center
 
-	links
-		float: right
+    links
+        float: right
+        margin-right: 20px
 
-	image
-		display: block
+    image
+        display: block
 
-		margin-left  : auto
-		margin-right : auto
+        margin-left  : auto
+        margin-right : auto
 
-		border-width : 1px
-		border-style : solid
-		border-color : #7f7f7f
+        border-width : 1px
+        border-style : solid
+        border-color : #7f7f7f
 
-		border-radius : 0.5em
+        border-radius : 0.5em
 `

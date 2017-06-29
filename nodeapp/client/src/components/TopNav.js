@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Link, IndexLink, redirect } from 'react-isomorphic-render'
+import { redirect } from 'react-isomorphic-render'
 import Gravatar from 'react-gravatar'
-import { flat as style } from 'react-styling'
 
 import { connect } from 'react-redux';
-import { connector, get_me, logout_user } from '../redux/auth'
+import { connector, logout_user } from '../redux/auth'
 
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
@@ -18,14 +17,14 @@ export default class TopNav extends Component {
     }
 
     async log_user_out() {
-        console.log("LOGOUT")
-        const { logout_user } = this.props
+        const { logout_user, redirect } = this.props
         await logout_user()
         redirect('/')
     }
 
     render() {
         const { user } = this.props
+
         const avatarDropdown = user ? (
             <Dropdown id="avatar-dropdown" pullRight>
                 <Dropdown.Toggle>

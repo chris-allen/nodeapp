@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { flat as style } from 'react-styling'
-import { Title } from 'react-isomorphic-render'
+import { Link, Title, redirect } from 'react-isomorphic-render'
 
-export default class Page extends Component {
+export default class Dashboard extends Component {
     render() {
+        const { user } = this.props
+
         const markup = (
             <section className="content">
-                <Title>Error</Title>
+                <Title>Dashboard</Title>
 
                 <h1 style={ styles.header }>
-                    Some kind of an error happened
+                    Dashboard
                 </h1>
+
             </section>
         )
 

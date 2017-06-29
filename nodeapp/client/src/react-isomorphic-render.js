@@ -11,54 +11,54 @@ import Cookies from 'universal-cookie';
 
 export default
 {
-	reducer: reducer,
-	routes: routes,
-	wrapper: wrapper,
+    reducer: reducer,
+    routes: routes,
+    wrapper: wrapper,
 
-	error: (error, { path, url, redirect, dispatch, getState, server }) => {
-		console.error(`Error while preloading "${url}"`)
-		console.log(error)
-		
-		// // Not authenticated
-		if (error.status === 401) {
-			return redirect('/login')
-		}
+    error: (error, { path, url, redirect, dispatch, getState, server }) => {
+        console.error(`Error while preloading "${url}"`)
+        // console.log(error)
 
-		// // Not authorized
-		// if (error.status === 403)
-		// {
-		// 	return redirect('/unauthorized')
-		// }
+        // // Not authenticated
+        if (error.status === 401) {
+            return redirect('/logout')
+        }
 
-		// Redirect to a generic error page
-		if (process.env.NODE_ENV === 'production')
-		{
-			redirect('/error')
-		}
+        // // Not authorized
+        // if (error.status === 403)
+        // {
+        //     return redirect('/unauthorized')
+        // }
 
-		// throw error
-	},
+        // Redirect to a generic error page
+        if (process.env.NODE_ENV === 'production')
+        {
+            redirect('/error')
+        }
 
-	http: {
-	    request: (request, { store }) => {
-	    	const bearerToken = request.get('Authorization')
-	    	if (bearerToken) {
-				// Remove "Bearer " prefix for passport
-	    		request.set('Authorization', bearerToken.substring(7))
-	    	}
-	    }
-	},
+        // throw error
+    },
 
-	authentication: {
-		protectedCookie: 'token',
-		accessToken: (getCookie, helpers) => {
-			const token = getCookie('token')
-			if (token) {
-				return token
-			}
-			return ""
-		}
-	},
+    http: {
+        request: (request, { store }) => {
+            const bearerToken = request.get('Authorization')
+            if (bearerToken) {
+                // Remove "Bearer " prefix for passport
+                request.set('Authorization', bearerToken.substring(7))
+            }
+        }
+    },
 
-	...asyncSettings
+    authentication: {
+        protectedCookie: 'token',
+        accessToken: (getCookie, helpers) => {
+            const token = getCookie('token')
+            if (token) {
+                return token
+            }
+            return ""
+        }
+    },
+
+    ...asyncSettings
 }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { flat as style } from 'react-styling'
-import { TextInput, Button } from 'react-responsive-ui'
-import Form, { Field, Submit } from 'simpler-redux-form'
+// import { TextInput, Button } from 'react-responsive-ui'
+import Form from 'simpler-redux-form'
+import { FormGroup, FormControl, HelpBlock, Button } from 'react-bootstrap'
 import { redirect, Title } from 'react-isomorphic-render'
 
 import { connector, signup_user } from '../redux/auth'
@@ -19,8 +20,8 @@ export default class Signup_page extends Component
     }
 
     user_signed_up() {
-        const { redirect } = this.props
-        redirect('/users');
+        const { dispatch, redirect } = this.props
+        dispatch(redirect('/app'));
     }
 
     render() {
@@ -35,7 +36,7 @@ export default class Signup_page extends Component
                     Signup
                 </h1>
                 
-                <SignupForm onSubmitted={ this.user_signed_up }/>
+                <SignupForm className="col-md-offset-4 col-md-4 text-center" onSubmitted={ this.user_signed_up }/>
             </section>
         )
 
@@ -47,79 +48,108 @@ export default class Signup_page extends Component
 @Form
 @connect(state => ({ ...connector(state.auth) }), { signup_user })
 class SignupForm extends Component {
+    state = {
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
+    }
+
     constructor() {
         super()
 
         this.submit = this.submit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    async submit(values) {
+    async submit() {
         const { signup_user, onSubmitted } = this.props
+        const values = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation
+        }
 
         await signup_user(values)
         onSubmitted()
     }
 
-    validate_email(value) {
-        if (!value) {
-            return "Enter a valid email address"
-        }
-    }
+    handleChange(e) {
+        // If you are using babel, you can use ES 6 dictionary syntax { [e.target.name] = e.target.value }
+        var change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
+      }
 
     render() {
-        const { submit, submitting, signupUserError } = this.props
+        const { submit, signupUserPending, signupUserError } = this.props
 
         let errors = {}
         if (signupUserError) {
             const errors_array = JSON.parse(signupUserError.message)
             for (var error of errors_array) {
-                errors[error.path] = error.message
+                errors[error.path] = <HelpBlock>{error.message}</HelpBlock>
             }
         }
 
         return (
-            <form onSubmit={ submit(this.submit) } style={ styles.login_form }>
-                <Field
-                    name="first_name"
-                    label="First Name"
-                    component={ TextInput }
-                    error={ errors['first_name'] }
-                    style={ styles.signup_form_input }/>
-
-                <Field
-                    name="last_name"
-                    label="Last Name"
-                    component={ TextInput }
-                    error={ errors['last_name'] }
-                    style={ styles.signup_form_input }/>
-                <Field
-                    name="email"
-                    label="Email"
-                    validate={ this.validate_email }
-                    component={ TextInput }
-                    error={ errors['email'] }
-                    style={ styles.signup_form_input }/>
-                <Field
-                    name="password"
-                    type="password"
-                    label="Password"
-                    error={ errors['password'] }
-                    component={ TextInput }
-                    style={ styles.signup_form_input }/>
-                <Field
-                    name="password_confirmation"
-                    type="password"
-                    label="Password Confirmation"
-                    error={ errors['password_confirmation'] }
-                    component={ TextInput }
-                    style={ styles.signup_form_input }/>
-                <Submit
-                    submit
-                    component={ Button }
-                    className="rrui__button--border"
-                    style={ styles.login_form_submit }>
+            <form className={ this.props.className }  onSubmit={ submit(this.submit) }>
+                <FormGroup controlId="firstNameControl" validationState={errors['first_name'] ? 'error' : null}>
+                    <FormControl
+                        name="first_name"
+                        type="text"
+                        placeholder="Enter first name"
+                        onChange={ this.handleChange }
+                        value={this.state.first_name}
+                        style={ styles.signup_form_input } />
+                    { errors['first_name'] }
+                </FormGroup>
+                <FormGroup controlId="lastNameControl" validationState={errors['last_name'] ? 'error' : null}>
+                    <FormControl
+                        name="last_name"
+                        type="text"
+                        placeholder="Enter last name"
+                        onChange={ this.handleChange }
+                        value={this.state.last_name}
+                        style={ styles.signup_form_input } />
+                    { errors['last_name'] }
+                </FormGroup>
+                <FormGroup controlId="emailNameControl" validationState={errors['email'] ? 'error' : null}>
+                    <FormControl
+                        name="email"
+                        type="email"
+                        placeholder="Enter email"
+                        onChange={ this.handleChange }
+                        value={this.state.email}
+                        style={ styles.signup_form_input } />
+                    { errors['email'] }
+                </FormGroup>
+                <FormGroup controlId="pwdNameControl" validationState={errors['password'] ? 'error' : null}>
+                    <FormControl
+                        name="password"
+                        type="password"
+                        placeholder="Enter password"
+                        onChange={ this.handleChange }
+                        value={this.state.password}
+                        style={ styles.signup_form_input } />
+                    { errors['password'] }
+                </FormGroup>
+                <FormGroup controlId="pwdCmfNameControl" validationState={errors['password_confirmation'] ? 'error' : null}>
+                    <FormControl
+                        name="password_confirmation"
+                        type="password"
+                        placeholder="Enter password again"
+                        onChange={ this.handleChange }
+                        value={this.state.password_confirmation}
+                        style={ styles.signup_form_input } />
+                    { errors['password_confirmation'] }
+                </FormGroup>
+                <Button type="submit" disabled={ signupUserPending } style={ styles.signup_form_submit }>
                     Signup
-                </Submit>
+                </Button>
             </form>
         )
     }
@@ -129,32 +159,10 @@ const styles = style
 `
     header
         text-align: center
-
-    image
-        display: block
-
-        margin-left  : auto
-        margin-right : auto
-
-        border-width : 1px
-        border-style : solid
-        border-color : #7f7f7f
-
-        border-radius : 0.5em
-
-    login_form
-        width: 300px;
-        margin: 0 auto;
-
-    signup_form_input, login_form_submit
-        display        : inline-block
-        margin-top     : 10px
-        vertical-align : top
-        font-size      : 0.8em
         
-    signup_form_input
-        margin-right   : 0.6em
+    signup_form_input, signup_form_submit
+        margin-top     : 10px
 
-    login_form_submit
-        margin-top     : 0.3em
+    signup_form_submit
+        width          : 100px
 `

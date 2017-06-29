@@ -4,25 +4,23 @@ import { flat as style } from 'react-styling'
 
 export default class Not_found extends Component
 {
-	render()
-	{
-		const markup =
-		(
-			<div>
-				<Title>Page not found</Title>
+    render() {
+        const markup = (
+            <div>
+                <Title>Page not found</Title>
 
-				<h1 style={ styles.header }>
-					Page not found
-				</h1>
-			</div>
-		)
+                <h1 style={ styles.header }>
+                    Page not found
+                </h1>
+            </div>
+        )
 
-		return markup
-	}
+        return markup
+    }
 }
 
 const styles = style
 `
-	header
-		text-align: center
+    header
+        text-align: center
 `

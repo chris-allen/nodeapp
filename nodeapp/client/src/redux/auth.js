@@ -69,15 +69,20 @@ export const get_me = action
     event: 'GET_ME',
     action: async (http) => {
         // If we're not logged in, don't throw a 401, just no-op
-        if (http.cookies_raw && http.cookies_raw.indexOf('token=') >= 0)
+        if (http.cookies_raw && http.cookies_raw.indexOf('token=') >= 0) {
             return http.get('/api/me')
-        else
+        }
+        else {
             await delay(0)
+        }
     },
-    result: (state, result) => ({
-        ...state,
-        user: result
-    })
+    result: (state, result) => {
+        let newState = { ...state }
+        if (result) {
+            newState.user = result
+        }
+        return newState
+    }
 },
 handler)
 
