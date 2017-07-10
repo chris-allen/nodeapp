@@ -2,7 +2,7 @@
 
 import passport from 'passport';
 import jwt from 'jwt-simple';
-const config = require('../config/config.json')['development'];
+const config    = require('../../.env.json');
 
 import { sequelize as database } from '../models/index'
 import Sequelize from 'sequelize'
@@ -17,7 +17,7 @@ module.exports = function(app) {
 
     function tokenForUser(user) {
         const timestamp = new Date().getTime();
-        return jwt.encode({ sub: user.id, iat: timestamp, role: user.role }, config.secret_key);
+        return jwt.encode({ sub: user.id, iat: timestamp, role: user.role }, config.SECRET_KEY);
     }
 
     app.post('/login', passport.authenticate('local', { session: false }), function(req, res, next) {

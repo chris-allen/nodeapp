@@ -3,7 +3,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 const LocalStrategy = require('passport-local').Strategy;
 import { sequelize as database } from '../models/index'
 import Sequelize from 'sequelize'
-const config = require('../config/config.json')['development'];
+const config = require('../../.env.json');
 
 const User = require('../models/user')(database, Sequelize);
 
@@ -32,7 +32,7 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 // Create JWT Strategy
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.secret_key
+  secretOrKey: config.SECRET_KEY
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
