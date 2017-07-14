@@ -25,11 +25,11 @@ link "/home/ubuntu/nodeapp/nodeapp/node_modules" do
   to "/home/ubuntu/node_modules"
 end
 
-# nodejs_npm "npm-install" do
-#   path "/home/ubuntu/nodeapp/nodeapp"
-#   user "ubuntu"
-#   json true
-# end
+nodejs_npm "npm-install" do
+  path "/home/ubuntu/nodeapp/nodeapp"
+  user "ubuntu"
+  json true
+end
 
 # Initialize gitignored config using environment
 template "/home/ubuntu/nodeapp/nodeapp/.config.json" do
