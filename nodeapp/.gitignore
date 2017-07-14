@@ -31,4 +31,4 @@ gh-pages/
 # test coverage folder
 coverage
 
-.env.json
+.config.json

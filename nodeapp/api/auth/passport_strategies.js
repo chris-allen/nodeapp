@@ -3,7 +3,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 const LocalStrategy = require('passport-local').Strategy;
 import { sequelize as database } from '../models/index'
 import Sequelize from 'sequelize'
-const config = require('../../.env.json');
+const config = require('../../.config.json');
 
 const User = require('../models/user')(database, Sequelize);
 

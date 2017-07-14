@@ -1,42 +1,29 @@
-# chef-nodeapp-cookbook
+# Nodeapp Cookbook
 
-TODO: Enter the cookbook description here.
+This cookbook is designed for use in both a production and development environments.  It can be used locally leveraging the Berkshelf vagrant plugin and on AWS using an OpsWorks stack.
 
-## Supported Platforms
+## Recipes
 
-TODO: List your supported platforms.
+### system
+This recipe installs all system-level dependencies.
 
-## Attributes
+### server
+This recipe installs and configures `nginx`.  Specifically, it proxies port 3000 to 80.
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['chef-nodeapp']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+### code
+This recipe fetches the source of the application.  _It is intended to be run only on OpsWorks._
 
-## Usage
+### dev_database
+This recipe simply installs PostgreSQL and creates a database with hardcoded credentials.  It is intended for development purposes only.
 
-### chef-nodeapp::default
-
-Include `chef-nodeapp` in your node's `run_list`:
-
-```json
-{
-  "run_list": [
-    "recipe[chef-nodeapp::default]"
-  ]
-}
-```
+### app
+This recipe assumes the application source exists and installs any dependencies kept in version control. It configures the application based on environment variables.  Lastly, any database schema changes are applied.
 
 ## License and Authors
+Copyright (C) APAX Software Development, LLC - All Rights Reserved
 
-Author:: Chris Allen (<chris@apaxsoftware.com>)
+Unauthorized copying of this file, via any medium is strictly prohibited
+
+Proprietary and confidential
+
+Written by Chris Allen <chris@apaxsoftware.com>, May 2017

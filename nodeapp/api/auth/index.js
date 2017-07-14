@@ -2,7 +2,7 @@
 
 import passport from 'passport';
 import jwt from 'jwt-simple';
-const config    = require('../../.env.json');
+const config    = require('../../.config.json');
 
 import { sequelize as database } from '../models/index'
 import Sequelize from 'sequelize'

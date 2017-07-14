@@ -1,17 +1,11 @@
 #
 # Cookbook Name:: chef-nodeapp
-# Recipe:: node_server
+# Recipe:: server
 #
 # Copyright (C) 2016 Chris Allen
 #
 # All rights reserved - Do Not Redistribute
 #
-
-if Dir.exists? '/home/vagrant'
-  user = 'vagrant'
-else
-  user = 'ubuntu'
-end
 
 app = node.attribute?('vagrant') ? node['vagrant']['app'] : search('aws_opsworks_app').first
 domain = app['domains'][0]
@@ -35,7 +29,7 @@ supervisord_program "node-server" do
   autostart true
   autorestart true
   startsecs 10
-  user "#{user}"
+  user "ubuntu"
   stdout_logfile '/var/log/nodeapp/nodeapp.log'
   stdout_logfile_backups 10
   stdout_events_enabled true
@@ -44,8 +38,8 @@ supervisord_program "node-server" do
   stderr_logfile_backups 88
   stderr_events_enabled true
   stderr_syslog true
-  environment "HOME=/home/#{user}"
-  directory "/home/#{user}/nodeapp/nodeapp"
+  environment "HOME=/home/ubuntu"
+  directory "/home/ubuntu/nodeapp/nodeapp"
   serverurl '/tmp/supervisor.sock'
 end
 
@@ -57,7 +51,7 @@ package 'nginx'
 template '/etc/nginx/sites-available/default' do
   source 'nginx.conf.erb'
   variables( :server_name => "#{domain}" )
-  user "#{user}"
+  user "ubuntu"
 end
 
 service 'nginx' do
