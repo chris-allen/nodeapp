@@ -1,3 +1,0 @@
-[submodule "chef-nodeapp"]
-	path = chef-nodeapp
-	url = git@github.com:chris-allen/chef-nodeapp.git
