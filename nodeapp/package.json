@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Project structure and build process attributed to https://github.com/halt-hammerzeit/webpack-react-redux-isomorphic-render-example",
   "scripts": {
+    "sequelize": "sequelize --config ./api/config/config.js --migrations-path ./api/migrations --models-path ./api/models",
     "start": "npm run dev",
     "dev": "npm-run-all development:client:rendering-service:build:prepare development",
     "development": "npm-run-all --parallel development:client:build development:client:rendering-service:build development:services",
@@ -98,6 +99,7 @@
     "redux": "^3.6.0",
     "sass-loader": "^4.1.1",
     "sequelize": "^3.30.0",
+    "sequelize-cli": "2.7.0",
     "simpler-redux-form": "^0.3.9",
     "style-loader": "^0.13.1",
     "svg-react-loader": "0.4.3",

@@ -42,6 +42,6 @@ end
 
 # Apply any migrations
 bash "migrate" do
-  code "sequelize db:migrate"
+  code "npm run sequelize db:migrate"
   cwd "/home/ubuntu/nodeapp/nodeapp/api"
 end
