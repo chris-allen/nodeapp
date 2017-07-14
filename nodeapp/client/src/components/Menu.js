@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-isomorphic-render'
 import { flat as style } from 'react-styling'
 
-export default class Menu extends Component
-{
+export default class Menu extends Component {
     render() {
         const { items } = this.props
 

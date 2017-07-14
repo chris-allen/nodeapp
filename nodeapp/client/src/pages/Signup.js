@@ -9,8 +9,7 @@ import { redirect, Title } from 'react-isomorphic-render'
 import { connector, signup_user } from '../redux/auth'
 
 @connect(state => ({ ...connector(state.auth) }), { signup_user, redirect })
-export default class Signup_page extends Component
-{
+export default class Signup_page extends Component {
     // state = {}
 
     constructor() {

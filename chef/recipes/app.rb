@@ -7,7 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-
 app = node.attribute?('vagrant') ? node['vagrant']['app'] : search('aws_opsworks_app').first
 environment = app['environment']
 
@@ -25,6 +24,7 @@ link "/home/ubuntu/nodeapp/nodeapp/node_modules" do
   to "/home/ubuntu/node_modules"
 end
 
+# Install package.json dependencies
 nodejs_npm "npm-install" do
   path "/home/ubuntu/nodeapp/nodeapp"
   user "ubuntu"

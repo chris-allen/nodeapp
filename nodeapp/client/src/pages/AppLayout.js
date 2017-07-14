@@ -18,8 +18,7 @@ import { connector, get_me } from '../redux/auth'
     return Promise.resolve()
 })
 @connect(state => ({ ...connector(state.auth) }), { get_me })
-export default class AppLayout extends Component
-{
+export default class AppLayout extends Component {
     static propTypes = {
         children : PropTypes.node.isRequired
     }

@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Title } from 'react-isomorphic-render'
 import { flat as style } from 'react-styling'
 
-export default class Not_found extends Component
-{
+export default class Not_found extends Component {
     render() {
         const markup = (
             <div>

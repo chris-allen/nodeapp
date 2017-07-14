@@ -10,8 +10,7 @@ import { connector, get_me, logout_user } from '../redux/auth'
 
 @preload(({ dispatch, getState }) => { return dispatch(get_me()) })
 @connect(state => ({ ...connector(state.auth) }), { logout_user, redirect })
-export default class Home extends Component
-{
+export default class Home extends Component {
     constructor() {
         super()
 

@@ -23,6 +23,7 @@ epilogue.initialize({
   sequelize: database
 });
 
+// User CRUD
 require('./user.js')(epilogue)
 
 app.listen(API_SERVICE_PORT, (error) => {

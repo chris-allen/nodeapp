@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { connector, get_me } from '../redux/auth'
 
 @connect(state => ({ ...connector(state.auth) }), { get_me })
-export default class Layout extends Component
-{
+export default class Layout extends Component {
     static propTypes = {
         children : PropTypes.node.isRequired
     }

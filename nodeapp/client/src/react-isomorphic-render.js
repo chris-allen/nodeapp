@@ -9,8 +9,7 @@ export { default as icon } from '../assets/images/icon.png'
 
 import Cookies from 'universal-cookie';
 
-export default
-{
+export default {
     reducer: reducer,
     routes: routes,
     wrapper: wrapper,

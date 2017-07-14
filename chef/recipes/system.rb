@@ -7,6 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# Grab git for code recipe
 package "git"
 
 # Install node and npm

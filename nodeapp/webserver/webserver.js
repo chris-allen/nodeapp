@@ -22,12 +22,10 @@ web.proxy('/api', `http://localhost:${API_SERVICE_PORT}`, { name: 'API service' 
 web.proxy(`http://localhost:${PAGE_SERVICE_PORT}`, { name: 'Page rendering service' })
 
 // Start web server
-web.listen(WEB_SERVICE_PORT).then(() =>
-{
-	log.info(`Web server is listening`)
-	log.info(`Now go to http://localhost:${WEB_SERVICE_PORT}`)
+web.listen(WEB_SERVICE_PORT).then(() => {
+    log.info(`Web server is listening`)
+    log.info(`Now go to http://localhost:${WEB_SERVICE_PORT}`)
 },
-(error) =>
-{
-	console.error(error)
+(error) => {
+    console.error(error)
 })

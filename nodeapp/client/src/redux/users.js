@@ -3,49 +3,38 @@ import settings from '../react-isomorphic-render-async'
 
 const handler = createHandler(settings);
 
-export const get_users = action
-({
+export const get_users = action({
     namespace: 'USERS',
     event: 'GET_USERS',
-    action: async (http) =>
-    {
+    action: async (http) => {
         await delay(1000)
         return http.get('/api/users')
-        // return await Promise.all(user_ids.map(id => http.get(`/api/users/${id}`)))
     },
-    result: (state, result) =>
-    ({
+    result: (state, result) => ({
         ...state,
         users: result
     })
-},
-handler)
+}, handler)
 
 handler.addStateProperties('users')
 
-export const add_user = action
-({
+export const add_user = action({
     namespace: 'USERS',
     event: 'ADD_USER',
-    action: async (user, http) =>
-    {
+    action: async (user, http) => {
         await delay(1500)
         await http.post(`/api/users`, user)
     }
-},
-handler)
+}, handler)
 
-export const delete_user = action
-({
+export const delete_user = action({
     namespace: 'USERS',
     event: 'DELETE_USER',
-    action: async (id, http) =>
-    {
+    action: async (id, http) => {
         await delay(1000)
         await http.delete(`/api/users/${id}`)
     }
-},
-handler)
+}, handler)
 
 // // A developer can additionally handle any other custom events
 // handler.handle('CUSTOM_EVENT', (state, action) =>
@@ -64,7 +53,6 @@ const initial_state = { users: [] }
 export default handler.reducer(initial_state)
 
 // "Sleep" using `Promise`
-function delay(delay)
-{
+function delay(delay) {
     return new Promise(resolve => setTimeout(resolve, delay))
 }

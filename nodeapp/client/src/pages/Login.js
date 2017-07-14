@@ -9,8 +9,7 @@ import { connect } from 'react-redux'
 import { connector, login_user } from '../redux/auth'
 
 @connect(state => ({ ...connector(state.auth) }), { login_user, redirect })
-export default class Login_page extends Component
-{
+export default class Login_page extends Component {
     // state = {}
 
     constructor() {

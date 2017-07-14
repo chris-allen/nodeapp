@@ -5,13 +5,11 @@ import Cookies from 'universal-cookie';
 const handler = createHandler(settings);
 
 
-export const signup_user = action
-({
+export const signup_user = action({
     namespace: 'AUTH',
     event: 'SIGNUP_USER',
-    action: async (values, http) =>
-    {
-        // await delay(1000)
+    action: async (values, http) => {
+        await delay(1000)
         return http.post(`/api/signup`, values)
     },
     result: (state, result) => {
@@ -22,15 +20,12 @@ export const signup_user = action
             user: result.user
         })
     }
-},
-handler)
+}, handler)
 
-export const login_user = action
-({
+export const login_user = action({
     namespace: 'AUTH',
     event: 'LOGIN_USER',
-    action: async (creds, http) =>
-    {
+    action: async (creds, http) => {
         await delay(1000)
         return http.post(`/api/login`, creds)
     },
@@ -42,14 +37,12 @@ export const login_user = action
             user: result.user
         })
     }
-},
-handler)
+}, handler)
 
 export const logout_user = action({
     namespace: 'AUTH',
     event: 'LOGOUT_USER',
-    action: async (http) =>
-    {
+    action: async (http) => {
         await delay(500)
     },
     result: (state, result) => {
@@ -63,8 +56,7 @@ export const logout_user = action({
 }, handler)
 
 
-export const get_me = action
-({
+export const get_me = action({
     namespace: 'AUTH',
     event: 'GET_ME',
     action: async (http) => {
@@ -83,8 +75,7 @@ export const get_me = action
         }
         return newState
     }
-},
-handler)
+}, handler)
 
 handler.addStateProperties('user')
 

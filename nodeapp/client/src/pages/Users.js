@@ -14,8 +14,7 @@ import {
     ({ ...users_connector(state.users) }),
     { get_users, add_user, delete_user }
 )
-export default class Users_page extends Component
-{
+export default class Users_page extends Component {
     state = {}
 
     constructor() {
@@ -169,8 +168,7 @@ export default class Users_page extends Component
 
 @Form
 @connect(state => ({}), { add_user })
-class Add_user_form extends Component
-{
+class Add_user_form extends Component {
     constructor() {
         super()
 
