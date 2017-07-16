@@ -1,4 +1,4 @@
-# App Cookbook
+# Nodeapp Cookbook
 
 This cookbook is designed for use in both a production and development environments.  It can be used locally leveraging the Berkshelf vagrant plugin and on AWS using an OpsWorks stack.
 
