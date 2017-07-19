@@ -45,3 +45,5 @@ bash "migrate" do
   code "npm run sequelize db:migrate"
   cwd "/home/ubuntu/nodeapp/nodeapp/api"
 end
+
+Chef::Application.fatal!("This causes 'deploy' to fail!")
