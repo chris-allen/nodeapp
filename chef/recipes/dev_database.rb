@@ -9,17 +9,16 @@
 execute "apt-get update" do
   action :nothing
 end.run_action(:run)
-include_recipe "postgresql::server"
-include_recipe "database::postgresql"
 
-postgresql_connection_info = {
-  :host => '127.0.0.1',
-  :port => '5432',
-  :username => 'postgres',
-  :password => 'password'
-}
+package "postgresql"
+package "postgresql-contrib"
 
-postgresql_database 'nodeapp' do
-  connection postgresql_connection_info
-  action :create
+
+bash 'set postgres password' do
+  code "sudo -u postgres psql -U postgres -d template1 -c \"ALTER USER postgres WITH PASSWORD 'password';\""
+end
+
+bash 'createdb' do
+  code "PGPASSWORD=password psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE nodeapp'"
+  ignore_failure true
 end

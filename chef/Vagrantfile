@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   config.berkshelf.enabled = true
   config.omnibus.chef_version = "12.10.24"
 
-  config.vm.synced_folder "../", "/home/ubuntu/nodeapp"
+  config.vm.synced_folder "../", "/home/vagrant/nodeapp"
 
   # OSX needs this for concurrent open files
   config.vm.provision :shell, :inline => "ulimit -n 4048"

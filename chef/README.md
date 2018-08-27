@@ -19,6 +19,9 @@ This recipe simply installs PostgreSQL and creates a database with hardcoded cre
 ### app
 This recipe assumes the application source exists and installs any dependencies kept in version control. It configures the application based on environment variables.  Lastly, any database schema changes are applied.
 
+### app\_with\_server
+This recipe enables the systemd service if it hasn't already been and the restarts it to rebuild the app.
+
 ## License and Authors
 Copyright (C) APAX Software Development, LLC - All Rights Reserved
 

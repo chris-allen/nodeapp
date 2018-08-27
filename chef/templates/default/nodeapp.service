@@ -1,0 +1,26 @@
+[Unit]
+Description=Nodeapp Server
+After=network.target
+
+[Service]
+# Foreground process (do not use --daemon in ExecStart or config.rb)
+Type=simple
+
+# Preferably configure a non-privileged user
+User=<%= @user %>
+Group=<%= @user %>
+
+# Specify the path to your puma application root
+WorkingDirectory=/home/<%= @user %>/nodeapp/nodeapp
+
+# Helpful for debugging socket activation, etc.
+# Environment=RAILS_ENV=<%= @rails_env %>
+# EnvironmentFile=/home/<%= @user %>/time_master_app/.env
+
+# The command to start Puma
+ExecStart=/home/<%= @user %>/nodeapp/nodeapp/start.sh
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

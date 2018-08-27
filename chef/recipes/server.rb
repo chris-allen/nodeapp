@@ -9,6 +9,7 @@
 
 app = node.attribute?('vagrant') ? node['vagrant']['app'] : search('aws_opsworks_app').first
 domain = app['domains'][0]
+user = node.attribute?('vagrant') ? 'vagrant' : 'ubuntu'
 
 # Create log file for daemon
 directory "/var/log/nodeapp" do
@@ -20,27 +21,15 @@ file "/var/log/nodeapp/nodeapp.log" do
 end
 
 # Daemonize node application
-include_recipe "supervisord"
-supervisord_program "node-server" do
-  command "npm run production"
-  process_name 'node-server'
-  numprocs 1
-  priority 998
-  autostart true
-  autorestart true
-  startsecs 10
-  user "ubuntu"
-  stdout_logfile '/var/log/nodeapp/nodeapp.log'
-  stdout_logfile_backups 10
-  stdout_events_enabled true
-  stdout_syslog true
-  stderr_logfile '/var/log/nodeapp/nodeapp.log'
-  stderr_logfile_backups 88
-  stderr_events_enabled true
-  stderr_syslog true
-  environment "HOME=/home/ubuntu"
-  directory "/home/ubuntu/nodeapp/nodeapp"
-  serverurl '/tmp/supervisor.sock'
+template '/etc/systemd/system/nodeapp.service' do
+  source 'nodeapp.service'
+  variables(
+    :user => "#{user}",
+  )
+end
+
+bash "reload_service_config" do
+  code "systemctl daemon-reload"
 end
 
 # Setup simple nginx proxy to node port
