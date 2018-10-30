@@ -12,5 +12,3 @@ package "git"
 
 # Install node and npm
 include_recipe "nodejs::npm"
-
-raise Chef::Exceptions::RecipeNotFound "WAIT WHAT?"
